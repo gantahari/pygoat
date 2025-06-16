@@ -74,7 +74,7 @@ jobs:
         with:
           sarif_file: sarif.output.json
 
-trivy:
+  trivy:
     if: true
     environment: main
     runs-on : ubuntu-latest
