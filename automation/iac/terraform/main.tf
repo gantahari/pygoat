@@ -68,3 +68,14 @@ module "web_app" {
 #     }
 # }
 
+resource "azurerm_key_vault" "name" {
+  name = "fdbvufvbuebs"
+  location = "eastus"
+  resource_group_name = "harirg"
+  tenant_id       = "104e77d4-81e7-4c16-ab44-935220bed6dd"
+  sku_name = "standard"
+
+  purge_protection_enabled = false
+  soft_delete_retention_days = null
+
+}
