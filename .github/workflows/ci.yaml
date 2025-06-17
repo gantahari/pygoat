@@ -97,18 +97,19 @@ jobs:
       - name: running trivy
         uses: aquasecurity/trivy-action@master
         with:
-          scan-ref: automation/iac/terraform 
+          scan-ref: './automation/iac/terraform'
           scan-type: 'fs'
           scanners: 'config'
           hide-progress: false
           format: 'sarif'
           output: 'trivy-results.sarif'
           exit-code: '0'
+          ignore-unfixed: true
           severity: 'CRITICAL,HIGH'
           trivy-config: trivy.yaml
 
       - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v2
         with:
           sarif_file: 'trivy-results.sarif'
 
