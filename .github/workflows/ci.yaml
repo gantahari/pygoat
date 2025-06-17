@@ -86,9 +86,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.2.2
 
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v4.6.2
+        with:
+          name: terraformCode
+          path: automation/iac/terraform    
+          retention-days: 7
+          overwrite: true
+
       - name: running trivy
         uses: aquasecurity/trivy-action@0.28.0
         with:
+          scan-ref: automation/iac/terraform 
           scan-type: 'config'
           hide-progress: true
           format: 'sarif'
