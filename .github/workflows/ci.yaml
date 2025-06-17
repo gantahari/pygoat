@@ -99,7 +99,7 @@ jobs:
         with:
           scan-ref: automation/iac/terraform 
           scan-type: 'config'
-          hide-progress: true
+          hide-progress: false
           format: 'sarif'
           output: 'trivy-results.sarif'
           exit-code: '1'
