@@ -6,7 +6,7 @@ on:
     - master
 jobs:
   SonarQube:
-    if: false
+    if: true
     environment: main
     runs-on : ubuntu-latest
     env:
@@ -75,7 +75,7 @@ jobs:
           sarif_file: sarif.output.json
 
   trivy:
-    if: true
+    if: false
     environment: main
     runs-on : ubuntu-latest
     env:
