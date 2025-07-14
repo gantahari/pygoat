@@ -117,7 +117,7 @@ jobs:
     runs-on : ubuntu-latest
     steps:
       - name: terraform init and apply
-        run:
+        run: |
           cd ./automation/iac/terraform
           ls -ltr
           terraform init
