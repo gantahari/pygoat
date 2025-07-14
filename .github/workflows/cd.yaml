@@ -1,0 +1,35 @@
+name: CD Pipeline
+
+on:
+  workflow_run:
+    workflows: ["CI Pipeline"]  # This ensures the CD pipeline is triggered when the CI pipeline completes
+    types:
+      - completed
+
+jobs:
+  Deploy:
+    runs-on: ubuntu-latest
+    needs: upload-artifact  # Ensures this job runs after the artifact is uploaded in the CI pipeline
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.2.2
+
+      - name: Download Artifact from CI Pipeline
+        uses: actions/download-artifact@v3
+        with:
+          name: terraformCode  # This should match the artifact name from the CI pipeline
+
+      - name: Deploy Artifact (Terraform Example)
+        run: |
+          # Example: Deploy the artifact (assuming it's a Terraform code)
+          # You can modify this part based on your actual deployment process
+          
+          # Example: Navigate to the downloaded terraform code directory
+          cd automation/iac/terraform
+          
+          # Run your deployment commands, like applying Terraform configuration
+          terraform init
+          terraform apply -auto-approve
+
+      # Add other steps as necessary, for example, deploying to Kubernetes, Azure, or other environments.
