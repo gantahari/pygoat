@@ -1,37 +1,37 @@
-name: CD Pipeline
+# name: CD Pipeline
 
-on:
-  workflow_run:
-    workflows: ["CI Pipeline"]  # This ensures the CD pipeline is triggered when the CI pipeline completes
-    types:
-      - completed
+# on:
+#   workflow_run:
+#     workflows: ["CI Pipeline"]  # This ensures the CD pipeline is triggered when the CI pipeline completes
+#     types:
+#       - completed
 
-jobs:
-  # This job doesn't need dependencies
-  Initialize:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4.2.2
+# jobs:
+#   # This job doesn't need dependencies
+#   Initialize:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4.2.2
 
-  Deploy:
-    runs-on: ubuntu-latest
-    needs: Initialize  # This ensures this job runs after the Initialize job (which doesn't have any dependencies)
+#   Deploy:
+#     runs-on: ubuntu-latest
+#     needs: Initialize  # This ensures this job runs after the Initialize job (which doesn't have any dependencies)
 
-    steps:
-      - name: Download Artifact from CI Pipeline
-        uses: actions/download-artifact@v3
-        with:
-          name: terraformCode  # This should match the artifact name from the CI pipeline
+#     steps:
+#       - name: Download Artifact from CI Pipeline
+#         uses: actions/download-artifact@v3
+#         with:
+#           name: terraformCode  # This should match the artifact name from the CI pipeline
 
-      - name: Deploy Artifact (Terraform Example)
-        run: |
-          # Example: Deploy the artifact (assuming it's a Terraform code)
-          # You can modify this part based on your actual deployment process
+#       - name: Deploy Artifact (Terraform Example)
+#         run: |
+#           # Example: Deploy the artifact (assuming it's a Terraform code)
+#           # You can modify this part based on your actual deployment process
           
-          # Example: Navigate to the downloaded terraform code directory
-          cd automation/iac/terraform
+#           # Example: Navigate to the downloaded terraform code directory
+#           cd automation/iac/terraform
           
-          # Run your deployment commands, like applying Terraform configuration
-          terraform init
-          terraform apply -auto-approve
+#           # Run your deployment commands, like applying Terraform configuration
+#           terraform init
+#           terraform apply -auto-approve
