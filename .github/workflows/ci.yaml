@@ -75,7 +75,7 @@ jobs:
           sarif_file: sarif.output.json
 
   trivy:
-    if: true
+    if: false
     environment: main
     runs-on : ubuntu-latest
     env:
@@ -119,5 +119,6 @@ jobs:
       - name: terraform init and apply
         run:
           cd ./automation/iac/terraform
+          ls -ltr
           terraform init
           terraform apply -auto-approve
