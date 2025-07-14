@@ -113,5 +113,11 @@ jobs:
         with:
           sarif_file: 'trivy-results.sarif'
 
-      
-  
+  deploy:
+    runs-on : ubuntu-latest
+    steps:
+      - name: terraform init and apply
+        run:
+          cd ./automation/iac/terraform
+          terraform init
+          terraform apply -auto-approve
