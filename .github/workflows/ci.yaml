@@ -121,9 +121,10 @@ jobs:
         
       - name: terraform init and apply
         run: |
+          pwd
           ls -ltr
           
-          cd ./pygoat/automation/iac/terraform
+          cd pygoat/automation/iac/terraform
           ls -ltr
           terraform init
           terraform apply -auto-approve
