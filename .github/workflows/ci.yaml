@@ -133,7 +133,10 @@ jobs:
           sudo apt-get install terraform
           terraform -help
 
-
+      - name: Terraform login
+        run: terraform login
+        env:
+          TF_CLOUD_TOKEN: ${{ secrets.TERRAFORMTOKEN }}
         
       - name: terraform init and apply
         run: |
