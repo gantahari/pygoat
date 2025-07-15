@@ -124,7 +124,7 @@ jobs:
           pwd
           ls -ltr
           
-          cd pygoat/automation/iac/terraform
+          cd automation/iac/terraform
           ls -ltr
           terraform init
           terraform apply -auto-approve
