@@ -38,15 +38,13 @@ jobs:
       #     terraform apply -auto-approve -var-file=variables/dev.tfvars
 
       - name: Azure Login
-        uses: Azure/login@v2.3.0
-        with:
-          creds: ${{ secrets.ARM_CLIENT_SECRET }}
-          # ClientId of the Azure Service principal created.
-          client-id: ${{ secrets.ARM_CLIENT_ID }}
-          # TenantId of the Azure Service principal created.
-          tenant-id: ${{ secrets.ARM_TENANT_ID }}
-          # Azure subscriptionId
-          subscription-id: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+        run: |
+          az login --service-principal \
+          --username "your-client-id" \
+          --password "your-client-secret" \
+          --tenant "your-tenant-id" \
+          --subscription "your-subscription-id"
+
 
       - name: Azure CLI Action
         uses: Azure/cli@v2.1.0
@@ -89,15 +87,12 @@ jobs:
       #     terraform apply -auto-approve -var-file=variables/prod.tfvars
       
       - name: Azure Login
-        uses: Azure/login@v2.3.0
-        with:
-          creds: ${{ secrets.ARM_CLIENT_SECRET }}
-          # ClientId of the Azure Service principal created.
-          client-id: ${{ secrets.ARM_CLIENT_ID }}
-          # TenantId of the Azure Service principal created.
-          tenant-id: ${{ secrets.ARM_TENANT_ID }}
-          # Azure subscriptionId
-          subscription-id: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+        run: |
+          az login --service-principal \
+          --username "your-client-id" \
+          --password "your-client-secret" \
+          --tenant "your-tenant-id" \
+          --subscription "your-subscription-id"
 
       - name: Azure CLI Action
         uses: Azure/cli@v2.1.0
