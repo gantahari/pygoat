@@ -42,11 +42,11 @@ jobs:
         with:
           creds: ${{ secrets.ARM_CLIENT_SECRET }}
           # ClientId of the Azure Service principal created.
-          client-id: ${{ secrets.ARM_CLIENT_SECRET }}
+          client-id: ${{ secrets.ARM_CLIENT_ID }}
           # TenantId of the Azure Service principal created.
-          tenant-id: ${{ secrets.ARM_CLIENT_SECRET }}
+          tenant-id: ${{ secrets.ARM_TENANT_ID }}
           # Azure subscriptionId
-          subscription-id: ${{ secrets.ARM_CLIENT_SECRET }}
+          subscription-id: ${{ secrets.ARM_SUBSCRIPTION_ID }}
 
       - name: Azure CLI Action
         uses: Azure/cli@v2.1.0
@@ -93,11 +93,11 @@ jobs:
         with:
           creds: ${{ secrets.ARM_CLIENT_SECRET }}
           # ClientId of the Azure Service principal created.
-          client-id: ${{ secrets.ARM_CLIENT_SECRET }}
+          client-id: ${{ secrets.ARM_CLIENT_ID }}
           # TenantId of the Azure Service principal created.
-          tenant-id: ${{ secrets.ARM_CLIENT_SECRET }}
+          tenant-id: ${{ secrets.ARM_TENANT_ID }}
           # Azure subscriptionId
-          subscription-id: ${{ secrets.ARM_CLIENT_SECRET }}
+          subscription-id: ${{ secrets.ARM_SUBSCRIPTION_ID }}
 
       - name: Azure CLI Action
         uses: Azure/cli@v2.1.0
