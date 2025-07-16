@@ -34,7 +34,13 @@ jobs:
       #     terraform init
       #     # terraform plan -var-file=variables/dev.tfvars
       #     terraform apply -auto-approve -var-file=variables/dev.tfvars
-
+      
+      - name: Iac Provision
+        uses: ./.github/actions/infraProvision
+        with:
+          workspace: dev
+          tfvars: ./variables/dev.tfvars
+          terraformtoken: ${{ secrets.TERRAFORMTOKEN }}
 
       - name: Deploy to AppService
         uses: ./.github/actions/deployToAppService

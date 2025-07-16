@@ -1,0 +1,27 @@
+name: Iac Provision
+inputs:
+  workspace:
+    required: true
+  tfvars:
+    required: true
+  terraformtoken:
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+
+    - name: HashiCorp - Setup Terraform
+      uses: hashicorp/setup-terraform@v2.0.3
+      with:
+        cli_config_credentials_token: ${{ inputs.terraformtoken }}
+
+
+    - name: Apply Terraform
+      shell: bash
+      run: |
+        cd ${{ github.workspace }}/terraformCode
+        export TF_WORKSPACE="${{ inputs.workspace }}"
+        terraform init
+        terraform apply -var-file=${{ inputs.tfvars }} -auto-approve
+      
