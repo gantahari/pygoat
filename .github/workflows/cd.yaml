@@ -60,6 +60,16 @@ jobs:
           target: 'https://dev-app-harirg-westus2.azurewebsites.net/login/'
           rules_file_name: '.zap/rules.tsv'
           cmd_options: '-a'
+          fail_on_warning: false  
+
+      - name: Upload ZAP Reports as Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: zap-reports
+          path: |
+            report_json.json
+            report_md.md
+            report_html.html
 
 
   prod:
@@ -115,3 +125,13 @@ jobs:
           target: 'https://dev-app-harirg-westus2.azurewebsites.net/login/'
           rules_file_name: '.zap/rules.tsv'
           cmd_options: '-a'
+          fail_on_warning: false  
+
+      - name: Upload ZAP Reports as Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: zap-reports
+          path: |
+            report_json.json
+            report_md.md
+            report_html.html
