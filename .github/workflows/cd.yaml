@@ -27,13 +27,13 @@ jobs:
         with:
           cli_config_credentials_token: ${{ secrets.TERRAFORMTOKEN }}
           
-      - name: terraform init
-        run: |
-          cd ${{ github.workspace }}/terraformCode
-          export TF_WORKSPACE="dev"
-          terraform init
-          # terraform plan -var-file=variables/dev.tfvars
-          terraform apply -auto-approve -var-file=variables/dev.tfvars
+      # - name: terraform init
+      #   run: |
+      #     cd ${{ github.workspace }}/terraformCode
+      #     export TF_WORKSPACE="dev"
+      #     terraform init
+      #     # terraform plan -var-file=variables/dev.tfvars
+      #     terraform apply -auto-approve -var-file=variables/dev.tfvars
 
       - name: Azure Login
         run: |
@@ -92,13 +92,13 @@ jobs:
         with:
           cli_config_credentials_token: ${{ secrets.TERRAFORMTOKEN }}
           
-      - name: terraform init
-        run: |
-          cd ${{ github.workspace }}/terraformCode
-          export TF_WORKSPACE="prod"
-          terraform init
-          # terraform plan -var-file=variables/prod.tfvars
-          terraform apply -auto-approve -var-file=variables/prod.tfvars
+      # - name: terraform init
+      #   run: |
+      #     cd ${{ github.workspace }}/terraformCode
+      #     export TF_WORKSPACE="prod"
+      #     terraform init
+      #     # terraform plan -var-file=variables/prod.tfvars
+      #     terraform apply -auto-approve -var-file=variables/prod.tfvars
       
       - name: Azure Login
         run: |
