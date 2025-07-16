@@ -93,6 +93,18 @@ jobs:
           path: automation/iac/terraform    
           retention-days: 7
           overwrite: true
+      
+      - name: HashiCorp - Setup Terraform
+        uses: hashicorp/setup-terraform@v2.0.3
+        with:
+          cli_config_credentials_token: ${{ secrets.TERRAFORMTOKEN }}
+          
+      - name: terraform init
+        run: |
+          cd ${{ github.workspace }}/automation/iac/terraform
+          terraform init
+          terraform plan
+      
 
       - name: running trivy
         uses: aquasecurity/trivy-action@master
