@@ -35,23 +35,18 @@ jobs:
       #     # terraform plan -var-file=variables/dev.tfvars
       #     terraform apply -auto-approve -var-file=variables/dev.tfvars
 
-      - name: Azure Login
-        run: |
-          az login --service-principal \
-            --username ${{ secrets.ARM_CLIENT_ID }} \
-            --password ${{ secrets.ARM_CLIENT_SECRET }} \
-            --tenant ${{ secrets.ARM_TENANT_ID }} 
-          
 
-          az account set --subscription ${{ secrets.ARM_SUBSCRIPTION_ID }}
-
-      - name: Azure CLI Action
-        uses: Azure/cli@v2.1.0
+      - name: Deploy to AppService
+        uses: ./.github/actions/deployToAppService
         with:
-          inlineScript: |
-            az webapp config container set --name dev-app-harirg-westus2 --resource-group dev-rg-harirg-westus2 --container-image-name gantahari/pygoatghaimage:15829659409
-          
-          
+          app_name: dev-app-harirg-westus2
+          resource_group: dev-rg-harirg-westus2
+          # docker_image: ${{ vars.DOCKER_USER }}/${{ vars.DOCKER_IMAGE_NAME }}:${{ github.event.inputs.ci_run_id }}
+          docker_image: ${{ vars.DOCKER_USER }}/pygoatghaimage:15829659409 
+          arm_token_client: ${{ secrets.ARM_TOKEN_CLIENT }}
+
+
+
       - name: ZAP Scan
         uses: zaproxy/action-baseline@v0.14.0
         with:
@@ -60,16 +55,6 @@ jobs:
           target: 'https://dev-app-harirg-westus2.azurewebsites.net/login/'
           rules_file_name: '.zap/rules.tsv'
           cmd_options: '-a'
-          fail_on_warning: false  
-
-      - name: Upload ZAP Reports as Artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: zap-reports
-          path: |
-            report_json.json
-            report_md.md
-            report_html.html
 
 
   prod:
@@ -108,11 +93,7 @@ jobs:
           app_name: prod-app-harirg-westus2
           resource_group: prod-rg-harirg-westus2
           # docker_image: ${{ vars.DOCKER_USER }}/${{ vars.DOCKER_IMAGE_NAME }}:${{ github.event.inputs.ci_run_id }}
-          docker_image: ${{ vars.DOCKER_USER }}/pygoatghaimage:15829659409
-          arm_client_id: ${{ secrets.ARM_CLIENT_ID }} \
-          arm_client_secret: ${{ secrets.ARM_CLIENT_SECRET }} \
-          arm_tenant_id: ${{ secrets.ARM_TENANT_ID }}  
-          arm_subscription_id: ${{ secrets.ARM_SUBSCRIPTION_ID }}  
+          docker_image: ${{ vars.DOCKER_USER }}/pygoatghaimage:15829659409  
           arm_token_client: ${{ secrets.ARM_TOKEN_CLIENT }}
 
 
@@ -125,13 +106,3 @@ jobs:
           target: 'https://dev-app-harirg-westus2.azurewebsites.net/login/'
           rules_file_name: '.zap/rules.tsv'
           cmd_options: '-a'
-          fail_on_warning: false  
-
-      - name: Upload ZAP Reports as Artifacts
-        uses: actions/upload-artifact@v4.6.2
-        with:
-          name: zap-reports
-          path: |
-            report_json.json
-            report_md.md
-            report_html.html
