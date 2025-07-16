@@ -69,7 +69,7 @@ module "web_app" {
 # }
 
 resource "azurerm_key_vault" "name" {
-  name = "fdbvufvbuebs"
+  name = module.naming.data_factory.name
   location = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   tenant_id       = "104e77d4-81e7-4c16-ab44-935220bed6dd"
