@@ -37,6 +37,15 @@ jobs:
           terraform plan -var-file=variables/dev.tfvars
           terraform apply -auto-approve -var-file=variables/dev.tfvars
 
+      - name: Azure CLI Action
+        uses: Azure/cli@v2.1.0
+        with:
+          inlineScript: |
+            az webapp config container set --name dev-app-harirg-westus2 --resource-group dev-rg-harirg-westus2 --container-image-name gantahari/pygoatghaimage:15829659409
+          
+          
+      
+
 
   prod:
     runs-on: ubuntu-latest
@@ -67,3 +76,10 @@ jobs:
           terraform init
           terraform plan -var-file=variables/prod.tfvars
           terraform apply -auto-approve -var-file=variables/prod.tfvars
+
+      - name: Azure CLI Action
+        uses: Azure/cli@v2.1.0
+        with:
+          inlineScript: |
+            az webapp config container set --name dev-app-harirg-westus2 --resource-group dev-rg-harirg-westus2 --container-image-name gantahari/pygoatghaimage:15829659409
+          
