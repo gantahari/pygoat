@@ -37,31 +37,31 @@ jobs:
           terraform apply -auto-approve -var-file=variables/dev.tfvars
 
 
-prod:
-  runs-on: ubuntu-latest
-  environment: main
-  # env:
-  #   TF_HOME: terraform
-  steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+  prod:
+    runs-on: ubuntu-latest
+    environment: main
+    # env:
+    #   TF_HOME: terraform
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Download the Terraform Artifact
-      uses: actions/download-artifact@v4.3.0
-      with:
-        name: terraformCode
-        path: terraformCode
-        run-id: ${{ github.event.inputs.ci_run_id }}
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Download the Terraform Artifact
+        uses: actions/download-artifact@v4.3.0
+        with:
+          name: terraformCode
+          path: terraformCode
+          run-id: ${{ github.event.inputs.ci_run_id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: HashiCorp - Setup Terraform
-      uses: hashicorp/setup-terraform@v2.0.3
-      with:
-        cli_config_credentials_token: ${{ secrets.TERRAFORMTOKEN }}
-        
-    - name: terraform init
-      run: |
-        cd ${{ github.workspace }}/terraformCode
-        terraform init
-        terraform plan -var-file=variables/prod.tfvars
-        terraform apply -auto-approve -var-file=variables/prod.tfvars
+      - name: HashiCorp - Setup Terraform
+        uses: hashicorp/setup-terraform@v2.0.3
+        with:
+          cli_config_credentials_token: ${{ secrets.TERRAFORMTOKEN }}
+          
+      - name: terraform init
+        run: |
+          cd ${{ github.workspace }}/terraformCode
+          terraform init
+          terraform plan -var-file=variables/prod.tfvars
+          terraform apply -auto-approve -var-file=variables/prod.tfvars
