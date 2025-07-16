@@ -10,8 +10,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
     environment: main
-    # env:
-    #   TF_HOME: terraform
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -29,13 +27,13 @@ jobs:
         with:
           cli_config_credentials_token: ${{ secrets.TERRAFORMTOKEN }}
           
-      # - name: terraform init
-      #   run: |
-      #     cd ${{ github.workspace }}/terraformCode
-      #     export TF_WORKSPACE="dev"
-      #     terraform init
-      #     terraform plan -var-file=variables/dev.tfvars
-      #     terraform apply -auto-approve -var-file=variables/dev.tfvars
+      - name: terraform init
+        run: |
+          cd ${{ github.workspace }}/terraformCode
+          export TF_WORKSPACE="dev"
+          terraform init
+          # terraform plan -var-file=variables/dev.tfvars
+          terraform apply -auto-approve -var-file=variables/dev.tfvars
 
       - name: Azure Login
         run: |
@@ -47,14 +45,11 @@ jobs:
 
           az account set --subscription ${{ secrets.ARM_SUBSCRIPTION_ID }}
 
-
-
-
       - name: Azure CLI Action
         uses: Azure/cli@v2.1.0
         with:
           inlineScript: |
-            az webapp config container set --name dev-app-harirg-westus2 --resource-group dev-rg-harirg-westus2 --container-image-name gantahari/pygoatghaimage:15829659409
+            az webapp config container set --name prod-app-harirg-westus2 --resource-group prod-rg-harirg-westus2 --container-image-name gantahari/pygoatghaimage:15829659409
           
           
       
@@ -63,8 +58,6 @@ jobs:
   prod:
     runs-on: ubuntu-latest
     environment: main
-    # env:
-    #   TF_HOME: terraform
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -82,13 +75,13 @@ jobs:
         with:
           cli_config_credentials_token: ${{ secrets.TERRAFORMTOKEN }}
           
-      # - name: terraform init
-      #   run: |
-      #     cd ${{ github.workspace }}/terraformCode
-      #     export TF_WORKSPACE="prod"
-      #     terraform init
-      #     terraform plan -var-file=variables/prod.tfvars
-      #     terraform apply -auto-approve -var-file=variables/prod.tfvars
+      - name: terraform init
+        run: |
+          cd ${{ github.workspace }}/terraformCode
+          export TF_WORKSPACE="prod"
+          terraform init
+          # terraform plan -var-file=variables/prod.tfvars
+          terraform apply -auto-approve -var-file=variables/prod.tfvars
       
       - name: Azure Login
         run: |
