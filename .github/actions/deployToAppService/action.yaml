@@ -35,17 +35,8 @@ runs:
 
     - name: Deploy Container
       shell: bash
-      uses: Azure/cli@v2.1.0
-      with:
-        inlineScript: |
-          az webapp config container set \
+      run: |
+        az webapp config container set \
           --name ${{ inputs.app_name }} \
           --resource-group ${{ inputs.resource_group }} \
           --container-image-name ${{ inputs.docker_image }}
-
-    # - name: Azure CLI Action
-    #   shell: bash
-    #   uses: Azure/cli@v2.1.0
-    #   with:
-    #     inlineScript: |
-    #       az webapp config container set --name dev-app-harirg-westus2 --resource-group dev-rg-harirg-westus2 --container-image-name gantahari/pygoatghaimage:15829659409
