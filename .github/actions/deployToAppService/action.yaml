@@ -31,10 +31,10 @@ runs:
       with:
         creds: |
           {
-            "clientId": "${{ inputs.arm_client_id }}",
-            "clientSecret": "${{ inputs.arm_client_secret }}",
-            "tenantId": "${{ inputs.arm_tenant_id }}",
-            "subscriptionId": "${{ inputs.arm_subscription_id }}"
+            "clientId": ${{ inputs.arm_client_id }},
+            "clientSecret": ${{ inputs.arm_client_secret }},
+            "tenantId": ${{ inputs.arm_tenant_id }},
+            "subscriptionId": ${{ inputs.arm_subscription_id }}
           }
 
 
