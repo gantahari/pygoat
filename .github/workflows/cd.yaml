@@ -29,13 +29,24 @@ jobs:
         with:
           cli_config_credentials_token: ${{ secrets.TERRAFORMTOKEN }}
           
-      - name: terraform init
-        run: |
-          cd ${{ github.workspace }}/terraformCode
-          export TF_WORKSPACE="dev"
-          terraform init
-          terraform plan -var-file=variables/dev.tfvars
-          terraform apply -auto-approve -var-file=variables/dev.tfvars
+      # - name: terraform init
+      #   run: |
+      #     cd ${{ github.workspace }}/terraformCode
+      #     export TF_WORKSPACE="dev"
+      #     terraform init
+      #     terraform plan -var-file=variables/dev.tfvars
+      #     terraform apply -auto-approve -var-file=variables/dev.tfvars
+
+      - name: Azure Login
+        uses: Azure/login@v2.3.0
+        with:
+          creds: ${{ secrets.ARM_CLIENT_SECRET }}
+          # ClientId of the Azure Service principal created.
+          client-id: ${{ secrets.ARM_CLIENT_SECRET }}
+          # TenantId of the Azure Service principal created.
+          tenant-id: ${{ secrets.ARM_CLIENT_SECRET }}
+          # Azure subscriptionId
+          subscription-id: ${{ secrets.ARM_CLIENT_SECRET }}
 
       - name: Azure CLI Action
         uses: Azure/cli@v2.1.0
@@ -69,13 +80,24 @@ jobs:
         with:
           cli_config_credentials_token: ${{ secrets.TERRAFORMTOKEN }}
           
-      - name: terraform init
-        run: |
-          cd ${{ github.workspace }}/terraformCode
-          export TF_WORKSPACE="prod"
-          terraform init
-          terraform plan -var-file=variables/prod.tfvars
-          terraform apply -auto-approve -var-file=variables/prod.tfvars
+      # - name: terraform init
+      #   run: |
+      #     cd ${{ github.workspace }}/terraformCode
+      #     export TF_WORKSPACE="prod"
+      #     terraform init
+      #     terraform plan -var-file=variables/prod.tfvars
+      #     terraform apply -auto-approve -var-file=variables/prod.tfvars
+      
+      - name: Azure Login
+        uses: Azure/login@v2.3.0
+        with:
+          creds: ${{ secrets.ARM_CLIENT_SECRET }}
+          # ClientId of the Azure Service principal created.
+          client-id: ${{ secrets.ARM_CLIENT_SECRET }}
+          # TenantId of the Azure Service principal created.
+          tenant-id: ${{ secrets.ARM_CLIENT_SECRET }}
+          # Azure subscriptionId
+          subscription-id: ${{ secrets.ARM_CLIENT_SECRET }}
 
       - name: Azure CLI Action
         uses: Azure/cli@v2.1.0
