@@ -5,29 +5,14 @@ on:
     branches:
     - master
 jobs:
-  SonarQube:
+  SonarQube-Scan:
     # if: false
     environment: main
     runs-on : ubuntu-latest
-    env:
-      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}  
-      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      DOCKER_IMAGENAME:  "pygoatghaimage"
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Login to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ env.DOCKER_USERNAME }}
-          password: ${{ env.DOCKER_PASSWORD }}
       
-      - name: Build and push
-        uses: docker/build-push-action@v6
-        with:
-          push: true
-          tags: ${{ env.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGENAME }}:${{ github.run_id }}
-
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v4
         env:
@@ -38,7 +23,7 @@ jobs:
             -Dsonar.projectKey=gantahari_pygoat
             
           
-  DockerScout:
+  DockerScout-Scan:
     # if: false
     environment: main
     runs-on : ubuntu-latest
@@ -49,6 +34,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
+        
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
@@ -74,7 +60,7 @@ jobs:
         with:
           sarif_file: sarif.output.json
 
-  trivy:
+  Trivy-Scan:
     # if: false
     environment: main
     runs-on : ubuntu-latest
@@ -121,7 +107,7 @@ jobs:
 
   trigger-cd:
     runs-on: ubuntu-latest
-    needs: [trivy]
+    needs: [SonarQube-Scan,DockerScout-Scan,Trivy-Scan]
     steps:
       - name: "CD pipeline Trigger"
         uses: actions/github-script@v7
