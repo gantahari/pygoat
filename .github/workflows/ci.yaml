@@ -130,7 +130,7 @@ jobs:
             await github.rest.actions.createWorkflowDispatch({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              workflow_id: "cd.yml",
+              workflow_id: "cd.yaml",
               ref: "master",
               inputs: {
                 ci_run_id: "${{ github.run_id }}"
