@@ -11,17 +11,26 @@ inputs:
     required: true
     description: Full Docker image name with tag
 
+  ARM_CLIENT_ID:
+    required: true
+  ARM_CLIENT_SECRET:
+    required: true
+  ARM_TENANT_ID:
+    required: true
+  ARM_SUBSCRIPTION_ID:
+    required: true
+
 runs:
   using: "composite"
   steps:
     - name: Azure Login
       run: |
         az login --service-principal \
-          --username ${{ secrets.ARM_CLIENT_ID }} \
-          --password ${{ secrets.ARM_CLIENT_SECRET }} \
-          --tenant ${{ secrets.ARM_TENANT_ID }} 
+          --username ${{ inputs.ARM_CLIENT_ID }} \
+          --password ${{ inputs.ARM_CLIENT_SECRET }} \
+          --tenant ${{ inputs.ARM_TENANT_ID }} 
         
-        az account set --subscription ${{ secrets.ARM_SUBSCRIPTION_ID }}
+        az account set --subscription ${{ inputs.ARM_SUBSCRIPTION_ID }}
 
     - name: Deploy Container
       uses: Azure/cli@v2.1.0

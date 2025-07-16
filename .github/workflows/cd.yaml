@@ -109,7 +109,10 @@ jobs:
           resource_group: prod-rg-harirg-westus2
           # docker_image: ${{ vars.DOCKER_USER }}/${{ vars.DOCKER_IMAGE_NAME }}:${{ github.event.inputs.ci_run_id }}
           docker_image: ${{ vars.DOCKER_USER }}/pygoatghaimage:15829659409
-
+          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }} \
+          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }} \
+          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}  
+          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}  
 
 
       - name: ZAP Scan
