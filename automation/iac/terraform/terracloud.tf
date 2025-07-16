@@ -8,7 +8,7 @@ terraform {
   } 
   cloud { 
       organization = "hari-first-project-terracloud" 
-
+#  dbs
     
   } 
 }

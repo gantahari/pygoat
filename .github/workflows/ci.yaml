@@ -98,12 +98,6 @@ jobs:
         uses: hashicorp/setup-terraform@v2.0.3
         with:
           cli_config_credentials_token: ${{ secrets.TERRAFORMTOKEN }}
-          
-      - name: terraform init
-        run: |
-          cd ${{ github.workspace }}/automation/iac/terraform
-          terraform init
-          terraform plan
       
 
       - name: running trivy
