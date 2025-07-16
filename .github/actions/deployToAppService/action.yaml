@@ -26,16 +26,16 @@ inputs:
 runs:
   using: "composite"
   steps:
-  - name: Azure Login
-    uses: Azure/login@v2.3.0
-    with:
-      creds: |
-        {
-          "clientId": "${{ inputs.arm_client_id }}",
-          "clientSecret": "${{ inputs.arm_client_secret }}",
-          "tenantId": "${{ inputs.arm_tenant_id }}",
-          "subscriptionId": "${{ inputs.arm_subscription_id }}"
-        }
+    - name: Azure Login
+      uses: Azure/login@v2.3.0
+      with:
+        creds: |
+          {
+            "clientId": "${{ inputs.arm_client_id }}",
+            "clientSecret": "${{ inputs.arm_client_secret }}",
+            "tenantId": "${{ inputs.arm_tenant_id }}",
+            "subscriptionId": "${{ inputs.arm_subscription_id }}"
+          }
 
 
     - name: Deploy Container
