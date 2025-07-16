@@ -1,37 +1,37 @@
-# name: CD Pipeline
+name: CD-Pipeline
 
-# on:
-#   workflow_run:
-#     workflows: ["CI Pipeline"]  # This ensures the CD pipeline is triggered when the CI pipeline completes
-#     types:
-#       - completed
+on:
+  workflow_dispatch:
+    inputs:
+      ci_run_id:
+        required: true
 
-# jobs:
-#   # This job doesn't need dependencies
-#   Initialize:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Checkout code
-#         uses: actions/checkout@v4.2.2
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    environment: main
+    # env:
+    #   TF_HOME: terraform
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-#   Deploy:
-#     runs-on: ubuntu-latest
-#     needs: Initialize  # This ensures this job runs after the Initialize job (which doesn't have any dependencies)
+      - name: Download the Terraform Artifact
+        uses: actions/download-artifact@v4.3.0
+        with:
+          name: terraformCode
+          path: terraformCode
+          run-id: ${{ github.event.inputs.ci_run_id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
-#     steps:
-#       - name: Download Artifact from CI Pipeline
-#         uses: actions/download-artifact@v3
-#         with:
-#           name: terraformCode  # This should match the artifact name from the CI pipeline
-
-#       - name: Deploy Artifact (Terraform Example)
-#         run: |
-#           # Example: Deploy the artifact (assuming it's a Terraform code)
-#           # You can modify this part based on your actual deployment process
+      - name: HashiCorp - Setup Terraform
+        uses: hashicorp/setup-terraform@v2.0.3
+        with:
+          cli_config_credentials_token: ${{ secrets.TERRAFORMTOKEN }}
           
-#           # Example: Navigate to the downloaded terraform code directory
-#           cd automation/iac/terraform
-          
-#           # Run your deployment commands, like applying Terraform configuration
-#           terraform init
-#           terraform apply -auto-approve
+      - name: terraform init
+        run: |
+          cd ${{ github.workspace }}/automation/iac/terraform
+          terraform init
+          terraform plan
+          terraform apply -auto-approve
