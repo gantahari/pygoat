@@ -24,6 +24,7 @@ runs:
   using: "composite"
   steps:
     - name: Azure Login
+      shell: bash
       run: |
         az login --service-principal \
           --username ${{ inputs.ARM_CLIENT_ID }} \
@@ -33,6 +34,7 @@ runs:
         az account set --subscription ${{ inputs.ARM_SUBSCRIPTION_ID }}
 
     - name: Deploy Container
+      shell: bash
       uses: Azure/cli@v2.1.0
       with:
         inlineScript: |
@@ -41,11 +43,9 @@ runs:
           --resource-group ${{ inputs.resource_group }} \
           --container-image-name ${{ inputs.docker_image }}
 
-
-
-    - name: Azure CLI Action
-      uses: Azure/cli@v2.1.0
-      with:
-        inlineScript: |
-          az webapp config container set --name dev-app-harirg-westus2 --resource-group dev-rg-harirg-westus2 --container-image-name gantahari/pygoatghaimage:15829659409
-        
+    # - name: Azure CLI Action
+    #   shell: bash
+    #   uses: Azure/cli@v2.1.0
+    #   with:
+    #     inlineScript: |
+    #       az webapp config container set --name dev-app-harirg-westus2 --resource-group dev-rg-harirg-westus2 --container-image-name gantahari/pygoatghaimage:15829659409
