@@ -6,7 +6,7 @@ on:
     - master
 jobs:
   SonarQube:
-    if: false
+    # if: false
     environment: main
     runs-on : ubuntu-latest
     env:
@@ -39,7 +39,7 @@ jobs:
             
           
   DockerScout:
-    if: false
+    # if: false
     environment: main
     runs-on : ubuntu-latest
     env:

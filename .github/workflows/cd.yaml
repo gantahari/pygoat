@@ -27,14 +27,6 @@ jobs:
         with:
           cli_config_credentials_token: ${{ secrets.TERRAFORMTOKEN }}
           
-      # - name: terraform init
-      #   run: |
-      #     cd ${{ github.workspace }}/terraformCode
-      #     export TF_WORKSPACE="dev"
-      #     terraform init
-      #     # terraform plan -var-file=variables/dev.tfvars
-      #     terraform apply -auto-approve -var-file=variables/dev.tfvars
-      
       - name: Iac Provision
         uses: ./.github/actions/infraProvision
         with:
@@ -47,8 +39,7 @@ jobs:
         with:
           app_name: dev-app-harirg-westus2
           resource_group: dev-rg-harirg-westus2
-          # docker_image: ${{ vars.DOCKER_USER }}/${{ vars.DOCKER_IMAGE_NAME }}:${{ github.event.inputs.ci_run_id }}
-          docker_image: ${{ vars.DOCKER_USER }}/pygoatghaimage:15829659409 
+          docker_image: ${{ vars.DOCKER_USER }}/pygoatghaimage:${{ github.event.inputs.ci_run_id }} 
           arm_token_client: ${{ secrets.ARM_TOKEN_CLIENT }}
 
 
@@ -82,24 +73,21 @@ jobs:
         uses: hashicorp/setup-terraform@v2.0.3
         with:
           cli_config_credentials_token: ${{ secrets.TERRAFORMTOKEN }}
-          
-      # - name: terraform init
-      #   run: |
-      #     cd ${{ github.workspace }}/terraformCode
-      #     export TF_WORKSPACE="prod"
-      #     terraform init
-      #     # terraform plan -var-file=variables/prod.tfvars
-      #     terraform apply -auto-approve -var-file=variables/prod.tfvars
-      
-     
+
+      - name: Iac Provision
+        uses: ./.github/actions/infraProvision
+        with:
+          workspace: prod
+          tfvars: ./variables/prod.tfvars
+          terraformtoken: ${{ secrets.TERRAFORMTOKEN }}
+
 
       - name: Deploy to AppService
         uses: ./.github/actions/deployToAppService
         with:
           app_name: prod-app-harirg-westus2
           resource_group: prod-rg-harirg-westus2
-          # docker_image: ${{ vars.DOCKER_USER }}/${{ vars.DOCKER_IMAGE_NAME }}:${{ github.event.inputs.ci_run_id }}
-          docker_image: ${{ vars.DOCKER_USER }}/pygoatghaimage:15829659409  
+          docker_image: ${{ vars.DOCKER_USER }}/pygoatghaimage:${{ github.event.inputs.ci_run_id }}  
           arm_token_client: ${{ secrets.ARM_TOKEN_CLIENT }}
 
 
