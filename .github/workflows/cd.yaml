@@ -39,7 +39,7 @@ jobs:
         with:
           app_name: dev-app-harirg-westus2
           resource_group: dev-rg-harirg-westus2
-          docker_image: ${{ vars.DOCKER_USER }}/pygoatghaimage:${{ github.event.inputs.ci_run_id }} 
+          docker_image: ${{ vars.DOCKERHUB_USERNAME }}/pygoatghaimage:${{ github.event.inputs.ci_run_id }} 
           arm_token_client: ${{ secrets.ARM_TOKEN_CLIENT }}
 
 
