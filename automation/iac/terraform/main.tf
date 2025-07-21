@@ -43,6 +43,12 @@ module "web_app" {
   }
 }
 
+resource "azurerm_log_analytics_workspace" "name" {
+  name = module.naming.log_analytics_workspace.name
+  resource_group_name = azurerm_resource_group.rg.name
+  location = azurerm_resource_group.rg.location
+  
+}
 
 
 
